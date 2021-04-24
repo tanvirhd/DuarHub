@@ -82,7 +82,7 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(ActivityHome.this,ActivityRegisterNewClient.class));
                 break;
             case R.id.navRegisterRider:
-                Toast.makeText(this, "Register Rider", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ActivityHome.this,ActivityRegisterNewRider.class));
                 break;
             case R.id.navDeliveryHistory:
                 Toast.makeText(this, "Delivery History", Toast.LENGTH_SHORT).show();

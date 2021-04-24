@@ -4,28 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.duarbd.duarhcentralhub.R;
-import com.duarbd.duarhcentralhub.adapter.AdapterProductType;
-import com.duarbd.duarhcentralhub.databinding.ActivityRegisterNewClientBinding;
-import com.duarbd.duarhcentralhub.interfaces.AdapterProductTypeCallBacks;
-import com.duarbd.duarhcentralhub.model.ModelClient;
-import com.duarbd.duarhcentralhub.model.ModelProductType;
+import com.duarbd.duarhcentralhub.databinding.ActivityRegisterNewRiderBinding;
 import com.duarbd.duarhcentralhub.model.ModelResponse;
+import com.duarbd.duarhcentralhub.model.ModelRider;
 import com.duarbd.duarhcentralhub.network.viewmodel.ViewModelHub;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.safetynet.SafetyNet;
-import com.google.android.gms.safetynet.SafetyNetApi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
@@ -36,41 +28,30 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ActivityRegisterNewClient extends AppCompatActivity implements AdapterProductTypeCallBacks {
-    private static final String TAG = "ActivityRegisterNewClie";
-    private ActivityRegisterNewClientBinding binding;
-    private List<ModelProductType> productTypeList;
-    private AdapterProductType adapterProductType;
-    public static Place clientBusinessPlace=null;
-    private int selectedTypePosition=-1;
+public class ActivityRegisterNewRider extends AppCompatActivity {
+    private static final String TAG = "ActivityRegisterNewRide";
+    private ActivityRegisterNewRiderBinding binding;
 
     private FirebaseAuth mAuth;
     private  PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     PhoneAuthCredential credential;
     private  String mVerificationId;
     private  PhoneAuthProvider.ForceResendingToken mResendToken;
+    private ViewModelHub viewModelHub;
 
     private String OTP_STATUS="Send OTP";
-    private ViewModelHub viewModelHub;
+    private String selectedRiderVehicleType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityRegisterNewClientBinding.inflate(getLayoutInflater());
+        binding=ActivityRegisterNewRiderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        init();
-        setupProductType();
 
-        binding.openmap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ActivityRegisterNewClient.this,MapsActivity.class));
-            }
-        });
+
+        init();
 
         binding.btnPhoneAuth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,38 +60,60 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
                     case "Send OTP":
                         binding.btnPhoneAuth.setText("Verify OTP");OTP_STATUS="Verify OTP";
                         binding.etOTP.setEnabled(true);
-                        sendVerificationCode(binding.clientPhoneNumber.getText().toString());
+                        sendVerificationCode(binding.etRiderPhnNumber.getText().toString());
                         break;
                     case "Verify OTP":
                         credential=createPhoneAuthCredential(mVerificationId,binding.etOTP.getText().toString());
                         signInWithPhoneAuthCredential(credential);
                         break;
                 }
-
             }
         });
 
-        binding.btnCompleteRegistration.setOnClickListener(new View.OnClickListener() {
+        binding.rgRiderVehicleType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rbBicycle:
+                        selectedRiderVehicleType="Bicycle";
+                        break;
+                    case R.id.rbMotorBike:
+                        selectedRiderVehicleType="Motor Bike";
+                        break;
+                    case R.id.rbEasyBike:
+                        selectedRiderVehicleType="Easy Bike";
+                        break;
+                }
+            }
+        });
+
+        binding.btnRiderRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(binding.etClientBusinessName.equals("")||binding.tvClientAddress.equals("")||selectedTypePosition==-1||
-                     !binding.btnPhoneAuth.getText().equals("Verified")||clientBusinessPlace==null){
-                    Toast.makeText(ActivityRegisterNewClient.this, "Fill-up all Field", Toast.LENGTH_SHORT).show();
-                } else {
-                    ModelClient newClient=new ModelClient(binding.clientPhoneNumber.getText().toString(), binding.clientPhoneNumber.getText().toString(),
-                            binding.etClientBusinessName.getText().toString(),clientBusinessPlace.getLatLng().latitude, clientBusinessPlace.getLatLng().longitude,
-                            binding.tvClientAddress.getText().toString(), productTypeList.get(selectedTypePosition).getProductTypeName(),
-                            binding.etClientBusinessName.getText().toString().substring(0,3).replaceAll("\\s+","")+binding.clientPhoneNumber.getText().toString(),
-                            0); //todo add pickup charge field to XMl
-                    viewModelHub.registerNewClient(newClient).observe(ActivityRegisterNewClient.this,
+                if(binding.etRiderName.getText().toString().equals("")||
+                    binding.etRiderPhnNumber.getText().toString().equals("")||
+                     binding.etRiderPhnNumber.getText().toString().length()!=11||
+                       binding.etOTP.getText().toString().equals("")||
+                        selectedRiderVehicleType.equals("")||selectedRiderVehicleType==null){
+                    Toast.makeText(ActivityRegisterNewRider.this, "Fill all Fields", Toast.LENGTH_SHORT).show();
+                }else {
+                    ModelRider rider=new ModelRider(
+                            binding.etRiderPhnNumber.getText().toString(),
+                            binding.etRiderName.getText().toString(),
+                            binding.etRiderPhnNumber.getText().toString(),
+                            selectedRiderVehicleType,
+                            binding.etRiderName.getText().toString().substring(0,3).replaceAll("\\s+","")+binding.etRiderPhnNumber.getText().toString()
+
+                    );
+                    viewModelHub.registerNewRider(rider).observe(ActivityRegisterNewRider.this,
                             new Observer<ModelResponse>() {
                                 @Override
                                 public void onChanged(ModelResponse modelResponse) {
                                     if(modelResponse!=null && modelResponse.getResponse()==1){
                                         //reg complete
-                                        clientBusinessPlace=null;finish();
+
                                     }else {
-                                        Toast.makeText(ActivityRegisterNewClient.this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ActivityRegisterNewRider.this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -118,28 +121,11 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
             }
         });
 
-        /*SafetyNet.getClient(this).isVerifyAppsEnabled() // check If SaftyNet is enabled or not
-                .addOnCompleteListener(new OnCompleteListener<SafetyNetApi.VerifyAppsUserResponse>() {
-                    @Override
-                    public void onComplete(Task<SafetyNetApi.VerifyAppsUserResponse> task) {
-                        if (task.isSuccessful()) {
-                            SafetyNetApi.VerifyAppsUserResponse result = task.getResult();
-                            if (result.isVerifyAppsEnabled()) {
-                                Log.d("MY_APP_TAG", "The Verify Apps feature is enabled.");
-                            } else {
-                                Log.d("MY_APP_TAG", "The Verify Apps feature is disabled.");
-                            }
-                        } else {
-                            Log.e("MY_APP_TAG", "A general error occurred.");
-                        }
-                    }
-                });*/
-    }
+    }//end of onCreate
 
-
-    void  init(){
+    void init(){
         setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setTitle("Client Registration");
+        getSupportActionBar().setTitle("Rider Registration");
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black);
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,40 +137,7 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
         mAuth=FirebaseAuth.getInstance();
         initPhoneAuthProvider();
         viewModelHub=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelHub.class);
-
-        productTypeList=new ArrayList<>();
-        adapterProductType=new AdapterProductType(productTypeList,this,this);
-        binding.recycProductType.setAdapter(adapterProductType);
-        binding.recycProductType.setLayoutManager(new GridLayoutManager(this,3));
-    }
-
-    void setupProductType(){
-        productTypeList.add(new ModelProductType("Food",false));
-        productTypeList.add(new ModelProductType("Clothing",false));
-        productTypeList.add(new ModelProductType("Crafts",false));
-        productTypeList.add(new ModelProductType("Electronics",false));
-        productTypeList.add(new ModelProductType("Fashion Accessories",false));
-        productTypeList.add(new ModelProductType("Beauty Product",false));
-        productTypeList.add(new ModelProductType("Jewellery",false));
-        productTypeList.add(new ModelProductType("Other",false));
-        adapterProductType.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onProductTypeClicked(int position) {
-
-        if(productTypeList.get(position).isSelected()){
-            selectedTypePosition=-1;
-            for(ModelProductType type:productTypeList)
-                type.setSelected(false);
-        }
-        else {
-            for(ModelProductType type:productTypeList)
-                type.setSelected(false);
-            productTypeList.get(position).setSelected(true);
-            selectedTypePosition=position;
-        }
-        adapterProductType.notifyDataSetChanged();
+        selectedRiderVehicleType="";
     }
 
     void  sendVerificationCode(String phoneNumber){
@@ -241,12 +194,12 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = task.getResult().getUser();
+                            //FirebaseUser user = task.getResult().getUser();
                             onVerificationCompleteUIUpdate();
                         } else {
                             Log.d(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(ActivityRegisterNewClient.this, "Wrong OTP", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityRegisterNewRider.this, "Wrong OTP", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -259,14 +212,4 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
         binding.btnPhoneAuth.setBackground(getResources().getDrawable(R.drawable.bg_cr8_green));
         binding.etOTP.setEnabled(false);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(clientBusinessPlace!=null){
-            binding.tvClientAddress.setText(clientBusinessPlace.getAddress());
-        }
-    }
-
-
 }

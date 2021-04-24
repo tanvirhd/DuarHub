@@ -14,9 +14,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.DuarHub">
-        <activity android:name=".presenter.ActivityRegisterNewClient"></activity>
+        android:theme="@style/Theme.DuarHub"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".presenter.ActivityRegisterNewRider"></activity>
+        <activity android:name=".presenter.ActivityRegisterNewClient" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

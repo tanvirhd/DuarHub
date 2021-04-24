@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.duarbd.duarhcentralhub.model.ModelClient;
 import com.duarbd.duarhcentralhub.model.ModelResponse;
+import com.duarbd.duarhcentralhub.model.ModelRider;
 import com.duarbd.duarhcentralhub.model.ModelToken;
 import com.duarbd.duarhcentralhub.network.ApiClient;
 import com.duarbd.duarhcentralhub.network.ApiInterface;
@@ -63,6 +64,24 @@ public class Repository {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Log.d(TAG, "registerNewClient: error:"+throwable.getMessage());
+                    }
+                });
+        return  result;
+    }
+
+    public  LiveData<ModelResponse> registerNewRider(ModelRider rider){
+        MutableLiveData<ModelResponse> result=new MutableLiveData<>();
+        apiRequest.registerNewRider(rider).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ModelResponse>() {
+                    @Override
+                    public void accept(ModelResponse modelResponse) throws Exception {
+                        result.postValue(modelResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "registerNewRider: error:"+throwable.getMessage());
                     }
                 });
         return  result;
