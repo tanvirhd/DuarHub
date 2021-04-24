@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "1058984814265",
+    "firebase_url": "https://duarproject-58d83-default-rtdb.firebaseio.com",
+    "project_id": "duarproject-58d83",
+    "storage_bucket": "duarproject-58d83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058984814265:android:8002e784d6c161c0cd5d68",
+        "android_client_info": {
+          "package_name": "com.duarbd.duarclientapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058984814265-oj2t71h6k9emuar10elr45i524u5d5n1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.duarbd.duarclientapp",
+            "certificate_hash": "77152c0f328cb9c7bc3c533f24b68929bf4bfa18"
+          }
+        },
+        {
+          "client_id": "1058984814265-o1qrtlurp91ptfm9jfvps810d3pnf3sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgubOIu3h_tEtDnlXvaet0GqaVjGTyXa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058984814265-o1qrtlurp91ptfm9jfvps810d3pnf3sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058984814265:android:75278df3eec0fae4cd5d68",
+        "android_client_info": {
+          "package_name": "com.duarbd.duarhcentralhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058984814265-o1qrtlurp91ptfm9jfvps810d3pnf3sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgubOIu3h_tEtDnlXvaet0GqaVjGTyXa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058984814265-o1qrtlurp91ptfm9jfvps810d3pnf3sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058984814265:android:7a36bd164aa55228cd5d68",
+        "android_client_info": {
+          "package_name": "com.duarbd.userapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058984814265-8p8vi2o4vo5iadqdd0nagu0l0tu781b4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.duarbd.userapp",
+            "certificate_hash": "77152c0f328cb9c7bc3c533f24b68929bf4bfa18"
+          }
+        },
+        {
+          "client_id": "1058984814265-o1qrtlurp91ptfm9jfvps810d3pnf3sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgubOIu3h_tEtDnlXvaet0GqaVjGTyXa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058984814265-o1qrtlurp91ptfm9jfvps810d3pnf3sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
