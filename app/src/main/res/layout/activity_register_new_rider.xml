@@ -87,7 +87,7 @@
             android:id="@+id/btnPhoneAuth"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:background="@drawable/bg_cr8_yelllow2"
+            android:background="@drawable/bg_cr8__fill_yelllow2"
             android:gravity="center"
             android:text="Send OTP"
             android:textColor="@color/black0"

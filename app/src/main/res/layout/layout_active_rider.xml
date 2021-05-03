@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    android:layout_margin="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_cr16_stroke_yellow">
+
+        <TextView
+            android:id="@+id/tvARD_RiderName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_cr16_tr_tl_stroke_yellow"
+            android:gravity="center_vertical"
+            android:minHeight="60dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="50dp"
+            android:text="Munir Hossain"
+            android:textSize="18dp"
+            android:textColor="@color/black0"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvARD_ongointRideNumber"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/bg_circle_rds18_red"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvARD_RiderName"
+            app:layout_constraintEnd_toEndOf="@+id/tvARD_RiderName"
+            app:layout_constraintTop_toTopOf="@+id/tvARD_RiderName" />
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/recyc_ongoingRideList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvARD_RiderName"
+            tools:itemCount="2"
+            tools:listitem="@layout/layout_delivery_details" />
+
+        <TextView
+            android:id="@+id/tvARD_noOngoingRideText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="No Ride Assigned Yet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvARD_RiderName" />
+
+        <TextView
+            android:id="@+id/tvARD_assignNewDelivery"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_cr16_bl_br_fill_yellow"
+            android:gravity="center"
+            android:text="Assign New Delivery"
+            android:textColor="@color/black0"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyc_ongoingRideList"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

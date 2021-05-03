@@ -136,7 +136,6 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
                 });*/
     }
 
-
     void  init(){
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle("Client Registration");

@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuarHub"
         android:usesCleartextTraffic="true">
-        <activity android:name=".presenter.ActivityRegisterNewRider"></activity>
+        <activity android:name=".presenter.ActivityAssignRider"></activity>
+        <activity android:name=".presenter.ActivityDeliveryDetails" />
+        <activity android:name=".presenter.ActivityRegisterNewRider" />
         <activity android:name=".presenter.ActivityRegisterNewClient" />
 
         <meta-data

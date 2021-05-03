@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:title="Register Client"
         android:id="@+id/navRegisterClient" />
+
     <item android:title="Register Rider"
         android:id="@+id/navRegisterRider" />
+
     <item android:title="Delivery History"
         android:id="@+id/navDeliveryHistory" />
+
+    <item android:title="Rider Status"
+        android:id="@+id/navRiderStatus" />
+
+    <item android:title="Rider Bill Clearance"
+        android:id="@+id/navRiderBillClearance" />
+
+    <item android:title="Client Bill Clearance"
+        android:id="@+id/navClientBillClearance" />
+
+    <item android:title="Salary Calculation"
+        android:id="@+id/navSalaryCalculation" />
+
     <item android:title="Log-Out"
         android:id="@+id/logout" />
+    
 </menu>

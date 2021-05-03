@@ -12,12 +12,16 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import com.duarbd.duarhcentralhub.model.ModelActiveRider;
 import com.duarbd.duarhcentralhub.model.ModelClient;
+import com.duarbd.duarhcentralhub.model.ModelDeliveryRequest;
 import com.duarbd.duarhcentralhub.model.ModelResponse;
 import com.duarbd.duarhcentralhub.model.ModelRider;
 import com.duarbd.duarhcentralhub.model.ModelToken;
 import com.duarbd.duarhcentralhub.network.repository.Repository;
 import com.duarbd.duarhcentralhub.network.work.WorkUpdateToken;
+
+import java.util.List;
 
 public class ViewModelHub extends AndroidViewModel {
     private Repository repository;
@@ -60,6 +64,22 @@ public class ViewModelHub extends AndroidViewModel {
 
     public  LiveData<ModelResponse> registerNewRider(ModelRider rider){
         return  repository.registerNewRider(rider);
+    }
+
+    public LiveData<List<ModelDeliveryRequest>> getAllDeliveryRequest(){
+        return repository.getAllDeliveryRequest();
+    }
+
+    public LiveData<ModelResponse> updateDeliveryStatusByRequestId(ModelDeliveryRequest request){
+        return repository.updateDeliveryStatusByRequestId(request);
+    }
+
+    public LiveData<List<ModelActiveRider>> getActiveRiderList(){
+        return repository.getActiveRiderList();
+    }
+
+    public  LiveData<ModelResponse> assignRiderByDeliveryRequestId(ModelDeliveryRequest deliveryRequest){
+        return repository.assignRiderByDeliveryRequestId(deliveryRequest);
     }
 
 }

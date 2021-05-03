@@ -1,12 +1,22 @@
 package com.duarbd.duarhcentralhub.tools;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.view.Window;
+
+import com.duarbd.duarhcentralhub.R;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,5 +54,49 @@ public class Utils {
 
     public static Uri getDefaultNotificationToneUri(){
         return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    }
+
+    public static String getCustentDateTime24HRFormat(){
+        Calendar calendar = Calendar.getInstance();
+        DateFormat dateFormatDate = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormatTime = new SimpleDateFormat("HH:MM");
+        return dateFormatDate.format(calendar.getTime())+" "+dateFormatTime.format(calendar.getTime());
+    }
+
+    public static String getCustentTime24HRFormat(){
+        Calendar calendar = Calendar.getInstance();
+        DateFormat dateFormatTime = new SimpleDateFormat("HH:MM");
+        return dateFormatTime.format(calendar.getTime());
+    }
+
+    public static String getTimeFromDeliveryRequestPlacedDate(String timeDate){
+        String[] separated=timeDate.split(" ");
+        return separated[1];
+    }
+
+    public static String addMinute(String time,int pickupWithin){
+        String ampm="";
+        String[] separatedTime=time.split(":");
+        int hour=Integer.valueOf(separatedTime[0]);
+        int min=Integer.valueOf(separatedTime[1]);
+
+        min=min+pickupWithin;
+        if(min>60){
+            hour=hour+1;
+            min=min-60;
+        }
+
+        return hour+":"+min;
+    }
+
+    public static Dialog setupLoadingDialog(Activity activity) {
+        Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_loading);
+        dialog.setCancelable(false);
+        Window window = dialog.getWindow();
+        //window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);  //this prevents dimming effect
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        return dialog;
     }
 }
