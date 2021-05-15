@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.Toolbar
+            map:navigationIcon="@drawable/ic_arrow_back_black"
             android:id="@+id/toolbar"
+            map:title="Client Business Location"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
     </com.google.android.material.appbar.AppBarLayout>

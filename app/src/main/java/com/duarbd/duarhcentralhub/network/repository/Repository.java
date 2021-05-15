@@ -11,6 +11,7 @@ import com.duarbd.duarhcentralhub.model.ModelClient;
 import com.duarbd.duarhcentralhub.model.ModelDeliveryRequest;
 import com.duarbd.duarhcentralhub.model.ModelResponse;
 import com.duarbd.duarhcentralhub.model.ModelRider;
+import com.duarbd.duarhcentralhub.model.ModelRiderSalary;
 import com.duarbd.duarhcentralhub.model.ModelToken;
 import com.duarbd.duarhcentralhub.network.ApiClient;
 import com.duarbd.duarhcentralhub.network.ApiInterface;
@@ -162,6 +163,42 @@ public class Repository {
                     }
                 });
 
+        return  result;
+    }
+
+    public LiveData<List<ModelDeliveryRequest>>  getAllCompletedDeliveryRequests(){
+        MutableLiveData<List<ModelDeliveryRequest>> result=new MutableLiveData<>();
+        apiRequest.getAllCompletedDeliveryRequests().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<ModelDeliveryRequest>>() {
+                    @Override
+                    public void accept(List<ModelDeliveryRequest> modelDeliveryRequests) throws Exception {
+                        result.postValue(modelDeliveryRequests);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "getAllCompletedDeliveryRequests: error:"+throwable.getMessage());
+                    }
+                });
+        return result;
+    }
+
+    public  LiveData<List<ModelRiderSalary>> getRiderSalary(){
+        MutableLiveData<List<ModelRiderSalary>> result=new MutableLiveData<>();
+        apiRequest.getRiderSalary().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<ModelRiderSalary>>() {
+                    @Override
+                    public void accept(List<ModelRiderSalary> modelRiderSalaries) throws Exception {
+                        result.postValue(modelRiderSalaries);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "getRiderSalary: error"+throwable.getMessage());
+                    }
+                });
         return  result;
     }
 }

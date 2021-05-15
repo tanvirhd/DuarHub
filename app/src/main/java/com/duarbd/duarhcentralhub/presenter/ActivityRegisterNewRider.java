@@ -97,12 +97,13 @@ public class ActivityRegisterNewRider extends AppCompatActivity {
                         selectedRiderVehicleType.equals("")||selectedRiderVehicleType==null){
                     Toast.makeText(ActivityRegisterNewRider.this, "Fill all Fields", Toast.LENGTH_SHORT).show();
                 }else {
+                    String pass=binding.etRiderName.getText().toString().substring(0,3).replaceAll("\\s+","")+binding.etRiderPhnNumber.getText().toString();
                     ModelRider rider=new ModelRider(
                             binding.etRiderPhnNumber.getText().toString(),
                             binding.etRiderName.getText().toString(),
                             binding.etRiderPhnNumber.getText().toString(),
                             selectedRiderVehicleType,
-                            binding.etRiderName.getText().toString().substring(0,3).replaceAll("\\s+","")+binding.etRiderPhnNumber.getText().toString()
+                            pass
 
                     );
                     viewModelHub.registerNewRider(rider).observe(ActivityRegisterNewRider.this,
@@ -110,8 +111,10 @@ public class ActivityRegisterNewRider extends AppCompatActivity {
                                 @Override
                                 public void onChanged(ModelResponse modelResponse) {
                                     if(modelResponse!=null && modelResponse.getResponse()==1){
-                                        //reg complete
-
+                                        binding.tvCredential.setText("Rider ID="+rider.getRiderid()+"\n"+"Password:"+pass);
+                                        binding.tvCredential.setVisibility(View.VISIBLE);
+                                        binding.btnRiderRegistration.setVisibility(View.GONE);
+                                        Toast.makeText(ActivityRegisterNewRider.this, "Registration Complete", Toast.LENGTH_SHORT).show();
                                     }else {
                                         Toast.makeText(ActivityRegisterNewRider.this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show();
                                     }

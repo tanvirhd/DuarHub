@@ -123,9 +123,17 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
             case R.id.navRegisterRider:
                 startActivity(new Intent(ActivityHome.this,ActivityRegisterNewRider.class));
                 break;
+            case R.id.navClientBillClearance:
+                startActivity(new Intent(ActivityHome.this,ActivityClientClearance.class));
+                break;
+            case R.id.navRiderBillClearance:
+                startActivity(new Intent(ActivityHome.this,ActivityRiderClearance.class));
+                break;
             case R.id.navDeliveryHistory:
-                Toast.makeText(this, "Delivery History", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ActivityHome.this,MapsActivity.class));
+                startActivity(new Intent(ActivityHome.this,ActivityDeliveryHistory.class));
+                break;
+            case R.id.navSalaryCalculation:
+                startActivity(new Intent(ActivityHome.this,ActivitySalaryCalculation.class));
                 break;
             case R.id.logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();

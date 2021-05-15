@@ -17,6 +17,7 @@ import com.duarbd.duarhcentralhub.model.ModelClient;
 import com.duarbd.duarhcentralhub.model.ModelDeliveryRequest;
 import com.duarbd.duarhcentralhub.model.ModelResponse;
 import com.duarbd.duarhcentralhub.model.ModelRider;
+import com.duarbd.duarhcentralhub.model.ModelRiderSalary;
 import com.duarbd.duarhcentralhub.model.ModelToken;
 import com.duarbd.duarhcentralhub.network.repository.Repository;
 import com.duarbd.duarhcentralhub.network.work.WorkUpdateToken;
@@ -80,6 +81,14 @@ public class ViewModelHub extends AndroidViewModel {
 
     public  LiveData<ModelResponse> assignRiderByDeliveryRequestId(ModelDeliveryRequest deliveryRequest){
         return repository.assignRiderByDeliveryRequestId(deliveryRequest);
+    }
+
+    public LiveData<List<ModelDeliveryRequest>>  getAllCompletedDeliveryRequests(){
+        return repository.getAllCompletedDeliveryRequests();
+    }
+
+    public  LiveData<List<ModelRiderSalary>> getRiderSalary(){
+        return repository.getRiderSalary();
     }
 
 }

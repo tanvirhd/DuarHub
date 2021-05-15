@@ -99,4 +99,12 @@ public class Utils {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return dialog;
     }
+
+    public static String[] getCustentDateArray(){
+        Calendar calendar = Calendar.getInstance();
+        DateFormat dateFormatDate = new SimpleDateFormat("dd-MM-yyyy");
+        String date=dateFormatDate.format(calendar.getTime());
+        String[] seperated=date.split("-");
+        return seperated;
+    }
 }

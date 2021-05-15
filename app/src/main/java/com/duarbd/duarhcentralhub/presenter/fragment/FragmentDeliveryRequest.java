@@ -76,8 +76,6 @@ public class FragmentDeliveryRequest extends Fragment implements AdapterDelivery
         binding.recycRequestedDelivery.setLayoutManager(new LinearLayoutManager(fragmentActivity));
     }
 
-
-    //todo getting result for delivery status below 4!!! update this
     void getAllDeliveryRequestFromServer(){
         dialogLoading.show();
         viewModelHub.getAllDeliveryRequest().observe(fragmentActivity,

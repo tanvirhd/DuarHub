@@ -194,6 +194,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/etOTP"
                 app:layout_constraintVertical_bias="1.0" />
 
+            <TextView
+                android:id="@+id/tv_credential"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credential"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/etOTP"
+                app:layout_constraintTop_toBottomOf="@+id/etOTP" />
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
                 android:layout_width="wrap_content"

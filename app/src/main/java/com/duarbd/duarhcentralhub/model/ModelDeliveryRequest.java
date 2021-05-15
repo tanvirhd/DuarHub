@@ -80,6 +80,10 @@ public class ModelDeliveryRequest implements Parcelable {
     @Expose
     private String riderid;
 
+    @SerializedName("riderClearance")
+    @Expose
+    private  String riderClearance;
+
     @SerializedName("clientPaymentStatus")
     @Expose
     private String clientPaymentStatus;
@@ -318,6 +322,14 @@ public class ModelDeliveryRequest implements Parcelable {
 
     public static Creator<ModelDeliveryRequest> getCREATOR() {
         return CREATOR;
+    }
+
+    public String getRiderClearance() {
+        return riderClearance;
+    }
+
+    public void setRiderClearance(String riderClearance) {
+        this.riderClearance = riderClearance;
     }
 
     //====================================================================================================

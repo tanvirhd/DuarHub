@@ -5,6 +5,7 @@ import com.duarbd.duarhcentralhub.model.ModelClient;
 import com.duarbd.duarhcentralhub.model.ModelDeliveryRequest;
 import com.duarbd.duarhcentralhub.model.ModelResponse;
 import com.duarbd.duarhcentralhub.model.ModelRider;
+import com.duarbd.duarhcentralhub.model.ModelRiderSalary;
 import com.duarbd.duarhcentralhub.model.ModelToken;
 
 import java.util.List;
@@ -34,4 +35,10 @@ public interface ApiInterface {
 
     @POST("assignRiderByDeliveryRequestId.php")
     Observable<ModelResponse> assignRiderByDeliveryRequestId(@Body ModelDeliveryRequest deliveryRequest);
+
+    @POST("getAllCompletedDeliveries.php")
+    Observable<List<ModelDeliveryRequest>> getAllCompletedDeliveryRequests();
+
+    @POST("getRiderPaymentAll.php")
+    Observable<List<ModelRiderSalary>> getRiderSalary();
 }

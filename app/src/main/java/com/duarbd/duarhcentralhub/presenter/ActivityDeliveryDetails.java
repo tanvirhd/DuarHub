@@ -46,7 +46,7 @@ public class ActivityDeliveryDetails extends AppCompatActivity {
         binding.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deliveryRequest.setDeliveryStatus(5);
+                deliveryRequest.setDeliveryStatus(7);
                 updateDeliveryStatusByid(deliveryRequest);
             }
         });
@@ -132,27 +132,27 @@ public class ActivityDeliveryDetails extends AppCompatActivity {
                 binding.status2.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                binding.tvRequestStatusText.setText("Rider Assigned.On His Way to Pickup."+"\n\n"+ridername);
+                binding.tvRequestStatusText.setText("Rider Assigned."+"\n\n"+ridername);
                 binding.status1.setVisibility(View.GONE);
                 binding.status2.setVisibility(View.GONE);
                 break;
             case 3:
-                binding.tvRequestStatusText.setText("Picked-up by "+ridername);
+                binding.tvRequestStatusText.setText("Rider is on his way to pick-up "+ridername);
                 binding.status1.setVisibility(View.GONE);
                 binding.status2.setVisibility(View.GONE);
                 break;
             case 4:
-                binding.tvRequestStatusText.setText("On the Way to Delivery."+"\n\n"+ridername);
+                binding.tvRequestStatusText.setText("Received by "+deliveryRequest.getRiderName());
                 binding.status1.setVisibility(View.GONE);
                 binding.status2.setVisibility(View.GONE);
                 break;
             case 5:
-                binding.tvRequestStatusText.setText("Delivered by "+ridername);
+                binding.tvRequestStatusText.setText("On the way to be delivered "+ridername);
                 binding.status1.setVisibility(View.GONE);
                 binding.status2.setVisibility(View.GONE);
                 break;
             case 6:
-                binding.tvRequestStatusText.setText("Canceled by Duar Team");
+                binding.tvRequestStatusText.setText("Deliverd."+"\n\n"+ridername);
                 binding.status1.setVisibility(View.GONE);
                 binding.status2.setVisibility(View.GONE);
                 break;

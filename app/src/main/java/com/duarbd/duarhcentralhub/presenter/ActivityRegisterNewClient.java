@@ -107,8 +107,10 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
                                 @Override
                                 public void onChanged(ModelResponse modelResponse) {
                                     if(modelResponse!=null && modelResponse.getResponse()==1){
-                                        //reg complete
-                                        clientBusinessPlace=null;finish();
+                                        binding.tvCredential.setText("Client ID="+newClient.getClientid()+"\n"+"Password:"+newClient.getClientPassword());
+                                        binding.tvCredential.setVisibility(View.VISIBLE);
+                                        binding.btnCompleteRegistration.setVisibility(View.GONE);
+                                        Toast.makeText(ActivityRegisterNewClient.this, "Registration Complete", Toast.LENGTH_SHORT).show();
                                     }else {
                                         Toast.makeText(ActivityRegisterNewClient.this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show();
                                     }
