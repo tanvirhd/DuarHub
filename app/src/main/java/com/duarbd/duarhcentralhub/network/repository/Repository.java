@@ -201,4 +201,22 @@ public class Repository {
                 });
         return  result;
     }
+
+    public LiveData<ModelResponse> updateRiderPaymentStatusByDeliveryId(ModelDeliveryRequest delivery){
+        MutableLiveData<ModelResponse> result=new MutableLiveData<>();
+        apiRequest.updateRiderPaymentStatusByDeliveryId(delivery).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ModelResponse>() {
+                    @Override
+                    public void accept(ModelResponse modelResponse) throws Exception {
+                        result.postValue(modelResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "updateRiderPaymentStatusByDeliveryId: error:"+throwable.getMessage());
+                    }
+                });
+        return result;
+    }
 }

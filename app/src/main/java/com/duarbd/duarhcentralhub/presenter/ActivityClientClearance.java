@@ -142,11 +142,11 @@ public class ActivityClientClearance extends AppCompatActivity implements Adapte
             }
         }
 
-        for(Map.Entry me:clientBillList.entrySet()){
+        /*for(Map.Entry me:clientBillList.entrySet()){
             List<ModelDeliveryRequest> list=new ArrayList<>();
             list.addAll((Collection<? extends ModelDeliveryRequest>) me.getValue());
             Log.d(TAG, "generateClientBill: "+me.getKey()+" size="+list.size());
-        }
+        }*/
 
         return clientBillList;
     }

@@ -15,6 +15,8 @@ import com.duarbd.duarhcentralhub.model.ModelDeliveryRequest;
 
 import java.util.List;
 
+
+//todo delete this adapter
 public class AdapterRiderBillClearance extends RecyclerView.Adapter<AdapterRiderBillClearance.ViewHoldeAdapterRiderBillClearance>{
 
     List<ModelDeliveryRequest> deliverylist;
