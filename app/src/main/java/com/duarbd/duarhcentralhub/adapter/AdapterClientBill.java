@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.duarbd.duarhcentralhub.R;
+import com.duarbd.duarhcentralhub.interfaces.AdapterClientBillCallBack;
 import com.duarbd.duarhcentralhub.model.ModelClientBill;
 
 import java.util.List;
@@ -17,17 +18,12 @@ import java.util.List;
 public class AdapterClientBill extends RecyclerView.Adapter<AdapterClientBill.ViewHolderAdapterClientBill> {
     Context context;
     List<ModelClientBill> billList;
-    //AdapterClientBillCallBack clientBillCallBack;
+    AdapterClientBillCallBack clientBillCallBack;
 
-    /*public AdapterClientBill(Context context, List<ModelBillCalculation> billList, AdapterClientBillCallBack clientBillCallBack) {
+    public AdapterClientBill(List<ModelClientBill> billList,Context context,  AdapterClientBillCallBack clientBillCallBack) {
         this.context = context;
         this.billList = billList;
         this.clientBillCallBack = clientBillCallBack;
-    }*/
-
-    public AdapterClientBill(Context context, List<ModelClientBill> billList) {
-        this.context = context;
-        this.billList = billList;
     }
 
     @NonNull
@@ -48,7 +44,7 @@ public class AdapterClientBill extends RecyclerView.Adapter<AdapterClientBill.Vi
         holder.view_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //clientBillCallBack.ViewDetails(billList.get(position).getClient_name());
+                clientBillCallBack.onViewDetailsClicked(billList.get(position).getClient_name());
             }
         });
     }

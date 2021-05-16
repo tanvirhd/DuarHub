@@ -144,6 +144,7 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "onResume: called");
         super.onResume();
         binding.drawerLayout.closeDrawer(GravityCompat.START);
     }

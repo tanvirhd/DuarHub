@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.duarbd.duarhcentralhub.R;
 import com.duarbd.duarhcentralhub.adapter.AdapterClientBill;
 import com.duarbd.duarhcentralhub.databinding.ActivityClientClearanceBinding;
+import com.duarbd.duarhcentralhub.interfaces.AdapterClientBillCallBack;
 import com.duarbd.duarhcentralhub.model.ModelClientBill;
 import com.duarbd.duarhcentralhub.model.ModelDeliveryRequest;
 import com.duarbd.duarhcentralhub.network.viewmodel.ViewModelHub;
@@ -28,19 +31,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ActivityClientClearance extends AppCompatActivity {
+public class ActivityClientClearance extends AppCompatActivity implements AdapterClientBillCallBack {
     private static final String TAG = "ActivityClientClearance";
     private ActivityClientClearanceBinding binding;
     private Dialog dialogLoading;
     private ViewModelHub viewModelHub;
     private DecimalFormat twodigits = new DecimalFormat("00");
 
-    private List<ModelDeliveryRequest> deliveryList;
-    private HashMap<String,List<ModelDeliveryRequest>> deliveryHistoryByClient;
-    private List<String> clientIdList;
-
-
-    private List<ModelClientBill> clientBillList;
+    private ArrayList<ModelDeliveryRequest> deliveryList;
+    private HashMap<String,ArrayList<ModelDeliveryRequest>> deliveryHistoryByClient;
+    private ArrayList<ModelClientBill> clientBillList;
     private AdapterClientBill adapterClientBill;
 
     @Override
@@ -50,7 +50,6 @@ public class ActivityClientClearance extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         init();
-        dummydata();
 
         binding.showClientBill.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +58,6 @@ public class ActivityClientClearance extends AppCompatActivity {
                 String date=twodigits.format(binding.datepicker.getSelectedDay())+"-"+
                         twodigits.format( (binding.datepicker.getSelectedMonth()+1))+"-"+
                         twodigits.format(binding.datepicker.getSelectedYear());
-
-                Toast.makeText(ActivityClientClearance.this, date, Toast.LENGTH_SHORT).show();
 
                 getDeliveriesFromServer(date);
             }
@@ -89,22 +86,11 @@ public class ActivityClientClearance extends AppCompatActivity {
 
         deliveryHistoryByClient=new HashMap<>();deliveryList=new ArrayList<>();
 
-        clientIdList=new ArrayList<>();
-
-
 
         clientBillList=new ArrayList<>();
-        adapterClientBill=new AdapterClientBill(ActivityClientClearance.this,clientBillList);
+        adapterClientBill=new AdapterClientBill(clientBillList,ActivityClientClearance.this,ActivityClientClearance.this);
         binding.recycClientBillList.setAdapter(adapterClientBill);
         binding.recycClientBillList.setLayoutManager(new LinearLayoutManager(ActivityClientClearance.this));
-    }
-
-    void clientBillCalculation(HashMap<String,List<ModelDeliveryRequest>> hashMap){
-        for(Map.Entry me:hashMap.entrySet()){
-            List<ModelDeliveryRequest> list=new ArrayList<>();
-            list.addAll((Collection<? extends ModelDeliveryRequest>) me.getValue());
-            Log.d(TAG, "clientBillCalculation: key="+me.getKey()+"size="+list.size());
-        }
     }
 
     void getDeliveriesFromServer(String date){
@@ -114,14 +100,83 @@ public class ActivityClientClearance extends AppCompatActivity {
                 new Observer<List<ModelDeliveryRequest>>() {
                     @Override
                     public void onChanged(List<ModelDeliveryRequest> modelDeliveryRequests) {
+                        deliveryList.clear();
+                        if(modelDeliveryRequests!=null&&modelDeliveryRequests.get(0).getResponse().equals("1")){
+                            if(modelDeliveryRequests.get(0).getStatus().equals("NothingFound")){
+                                deliveryList.clear();
+                                dialogLoading.dismiss();
+                                Toast.makeText(ActivityClientClearance.this, "0 Delivery Found.", Toast.LENGTH_SHORT).show();
+                            }else{
+                                deliveryList.clear();
 
+                                for(ModelDeliveryRequest delivery:modelDeliveryRequests){
+                                    String palceddate[]=delivery.getRequestPlacedTime().split(" ");
+                                    if(date.equals(palceddate[0])){
+                                        deliveryList.add(delivery);
+                                    }
+                                }
+
+                                deliveryHistoryByClient.clear();deliveryHistoryByClient.putAll(generateClientBill(deliveryList));
+                                generateClientBillRecyc(deliveryHistoryByClient);
+                            }
+                        }
                     }
                 });
     }
 
-    void  dummydata(){
-        clientBillList.add(new ModelClientBill("MFoods Bogura","1250","140","5"));
-        clientBillList.add(new ModelClientBill("Rajdhani Diner","890","90","3"));
+
+    //todo not an efficient way.must introduce an efficient way
+    HashMap<String,ArrayList<ModelDeliveryRequest>> generateClientBill(ArrayList<ModelDeliveryRequest> allDeliveries){
+
+        HashMap<String,ArrayList<ModelDeliveryRequest>> clientBillList=new HashMap<>();
+
+        for(ModelDeliveryRequest delivery:allDeliveries){
+            if(clientBillList.containsKey(delivery.getClientName())){
+                ArrayList<ModelDeliveryRequest> templist=new ArrayList<>();
+                templist.addAll(clientBillList.get(delivery.getClientName()));
+                templist.add(delivery);
+                clientBillList.put(delivery.getClientName(),templist);
+            }else {
+                ArrayList<ModelDeliveryRequest> templist=new ArrayList<>();templist.add(delivery);
+                clientBillList.put(delivery.getClientName(),templist);
+            }
+        }
+
+        for(Map.Entry me:clientBillList.entrySet()){
+            List<ModelDeliveryRequest> list=new ArrayList<>();
+            list.addAll((Collection<? extends ModelDeliveryRequest>) me.getValue());
+            Log.d(TAG, "generateClientBill: "+me.getKey()+" size="+list.size());
+        }
+
+        return clientBillList;
+    }
+    void generateClientBillRecyc(HashMap<String,ArrayList<ModelDeliveryRequest>> hashMap){
+        clientBillList.clear();
+
+        for(Map.Entry me:hashMap.entrySet()){
+            int totalBill=0,orderCount=0,totalDeliveryCharge=0;
+
+            for (ModelDeliveryRequest delivery:(List<ModelDeliveryRequest>)me.getValue()){
+                totalBill+=delivery.getProductPrice();
+                totalDeliveryCharge+=delivery.getDeliveryCharge();
+                orderCount++;
+            }
+
+            clientBillList.add(new ModelClientBill((String)me.getKey(),totalBill+"",totalDeliveryCharge+"",orderCount+""));
+        }
+
         adapterClientBill.notifyDataSetChanged();
+        dialogLoading.dismiss();
+    }
+
+    @Override
+    public void onViewDetailsClicked(String clientName) {
+        if(deliveryHistoryByClient.get(clientName).size()!=0){
+            Intent intent = new Intent(ActivityClientClearance.this, ActivityClientOrderHistory.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(getResources().getString(R.string.intent_data), (ArrayList<? extends Parcelable>) deliveryHistoryByClient.get(clientName));
+            intent.putExtras(bundle);
+            this.startActivity(intent);
+        }else Toast.makeText(this, "0 delivery. Nothing to show", Toast.LENGTH_SHORT).show();
     }
 }

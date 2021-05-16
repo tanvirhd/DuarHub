@@ -296,6 +296,14 @@ public class ModelDeliveryRequest implements Parcelable {
         this.riderid = riderid;
     }
 
+    public String getRiderClearance() {
+        return riderClearance;
+    }
+
+    public void setRiderClearance(String riderClearance) {
+        this.riderClearance = riderClearance;
+    }
+
     public String getClientPaymentStatus() {
         return clientPaymentStatus;
     }
@@ -324,15 +332,7 @@ public class ModelDeliveryRequest implements Parcelable {
         return CREATOR;
     }
 
-    public String getRiderClearance() {
-        return riderClearance;
-    }
-
-    public void setRiderClearance(String riderClearance) {
-        this.riderClearance = riderClearance;
-    }
-
-    //====================================================================================================
+    //=============================================================================================================
     protected ModelDeliveryRequest(Parcel in) {
         deliveryRequestId = in.readString();
         clientID = in.readString();
@@ -354,6 +354,7 @@ public class ModelDeliveryRequest implements Parcelable {
         deliveryStatus = in.readInt();
         riderName = in.readString();
         riderid = in.readString();
+        riderClearance = in.readString();
         clientPaymentStatus = in.readString();
         response = in.readString();
         status = in.readString();
@@ -381,6 +382,7 @@ public class ModelDeliveryRequest implements Parcelable {
         dest.writeInt(deliveryStatus);
         dest.writeString(riderName);
         dest.writeString(riderid);
+        dest.writeString(riderClearance);
         dest.writeString(clientPaymentStatus);
         dest.writeString(response);
         dest.writeString(status);
