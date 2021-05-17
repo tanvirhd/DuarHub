@@ -21,8 +21,5 @@
 
     <item android:title="Salary Calculation"
         android:id="@+id/navSalaryCalculation" />
-
-    <item android:title="Log-Out"
-        android:id="@+id/logout" />
     
 </menu>

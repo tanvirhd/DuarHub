@@ -10,15 +10,19 @@ public class ModelActiveRider {
     @SerializedName("riderName")
     @Expose
     private String riderName;
+
     @SerializedName("riderid")
     @Expose
     private String riderid;
+
     @SerializedName("response")
     @Expose
     private Integer response;
+
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private String status;
+
     @SerializedName("delivery")
     @Expose
     private List<ModelAssignedDelivery> delivery = null;
@@ -47,11 +51,11 @@ public class ModelActiveRider {
         this.response = response;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

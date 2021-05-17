@@ -22,7 +22,7 @@ public class ModelRiderSalary {
     private Integer response;
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private String status;
 
     public ModelRiderSalary(String riderName, String riderVehicle, String riderSalary) {
         this.riderName = riderName;
@@ -62,11 +62,11 @@ public class ModelRiderSalary {
         this.response = response;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

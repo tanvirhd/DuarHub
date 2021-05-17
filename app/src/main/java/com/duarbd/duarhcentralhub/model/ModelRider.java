@@ -33,7 +33,7 @@ public class ModelRider {
     private Integer response;
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private String status;
 
     public ModelRider(String riderid, String riderName, String riderContactNumber, String vehicleType, String password) {
         this.riderid = riderid;
@@ -51,11 +51,11 @@ public class ModelRider {
         this.response = response;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
