@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuarHub"
         android:usesCleartextTraffic="true">
-        <activity android:name=".presenter.ActivityRiderRideHistory"></activity>
+        <activity android:name=".presenter.ActivityRiderStatus"></activity>
+        <activity android:name=".presenter.ActivityRiderRideHistory" />
         <activity android:name=".presenter.ActivityClientOrderHistory" />
         <activity android:name=".presenter.ActivitySalaryCalculation" />
         <activity android:name=".presenter.ActivityRiderClearance" />

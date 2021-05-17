@@ -93,5 +93,11 @@ public class ViewModelHub extends AndroidViewModel {
     public LiveData<ModelResponse> updateRiderPaymentStatusByDeliveryId(ModelDeliveryRequest delivery){
         return repository.updateRiderPaymentStatusByDeliveryId(delivery);
     }
+    public LiveData<List<ModelRider>> getAllRegisteredRiderInfo(){
+        return repository.getAllRegisteredRiderInfo();
+    }
+    public LiveData<ModelResponse> updateRiderDutyStatus(ModelRider rider){
+        return repository.updateRiderDutyStatus(rider);
+    }
 
 }

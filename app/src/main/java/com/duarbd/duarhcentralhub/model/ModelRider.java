@@ -24,12 +24,47 @@ public class ModelRider {
     @Expose
     private String password;
 
+    @SerializedName("workingStatus")
+    @Expose
+    private int workingStatus;
+
+    @SerializedName("response")
+    @Expose
+    private Integer response;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
+
     public ModelRider(String riderid, String riderName, String riderContactNumber, String vehicleType, String password) {
         this.riderid = riderid;
         this.riderName = riderName;
         this.riderContactNumber = riderContactNumber;
         this.vehicleType = vehicleType;
         this.password = password;
+    }
+
+    public Integer getResponse() {
+        return response;
+    }
+
+    public void setResponse(Integer response) {
+        this.response = response;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public int getWorkingStatus() {
+        return workingStatus;
+    }
+
+    public void setWorkingStatus(int workingStatus) {
+        this.workingStatus = workingStatus;
     }
 
     public String getRiderid() {

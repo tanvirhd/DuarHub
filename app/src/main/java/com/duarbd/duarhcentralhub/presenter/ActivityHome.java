@@ -135,6 +135,9 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
             case R.id.navSalaryCalculation:
                 startActivity(new Intent(ActivityHome.this,ActivitySalaryCalculation.class));
                 break;
+            case R.id.navRiderStatus:
+                startActivity(new Intent(ActivityHome.this,ActivityRiderStatus.class));
+                break;
             case R.id.logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
                 break;

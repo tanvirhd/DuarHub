@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvrs_ridername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Monir Hossain"
+            android:textColor="@color/black0"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_callRider"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/bg_cr10_fill_yelllow2"
+            android:padding="4dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_call_black_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tvrs_ridername"
+            app:layout_constraintStart_toEndOf="@+id/tvrs_ridername"
+            app:layout_constraintTop_toTopOf="@+id/tvrs_ridername" />
+
+        <TextView
+            android:id="@+id/tvrs_riderid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="ID: raider123135"
+            android:textColor="@color/black4"
+            android:textSize="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/switchOnDuty"
+            app:layout_constraintStart_toStartOf="@+id/tvrs_ridername"
+            app:layout_constraintTop_toBottomOf="@+id/tvrs_ridername" />
+
+        <TextView
+            android:id="@+id/tvrs_riderVehicle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Vehicle: Bycicle"
+            android:textColor="@color/black4"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvrs_riderid"
+            app:layout_constraintStart_toStartOf="@+id/tvrs_riderid"
+            app:layout_constraintTop_toBottomOf="@+id/tvrs_riderid" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="On-Duty"
+            app:layout_constraintBottom_toTopOf="@+id/switchOnDuty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/switchOnDuty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView10"
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.cardview.widget.CardView>

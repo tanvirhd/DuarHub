@@ -219,4 +219,40 @@ public class Repository {
                 });
         return result;
     }
+
+    public LiveData<List<ModelRider>> getAllRegisteredRiderInfo(){
+        MutableLiveData<List<ModelRider>> result=new MutableLiveData<>();
+        apiRequest.getAllRegisteredRiderInfo().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<ModelRider>>() {
+                    @Override
+                    public void accept(List<ModelRider> modelRiders) throws Exception {
+                        result.postValue(modelRiders);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "getAllRegisteredRiderInfo: error: "+throwable.getMessage());
+                    }
+                });
+        return result;
+    }
+
+    public LiveData<ModelResponse> updateRiderDutyStatus(ModelRider rider){
+        MutableLiveData<ModelResponse> result=new MutableLiveData<>();
+        apiRequest.updateRiderDutyStatus(rider).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ModelResponse>() {
+                    @Override
+                    public void accept(ModelResponse modelResponse) throws Exception {
+                        result.postValue(modelResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "updateRiderDutyStatus: error: "+throwable.getMessage());
+                    }
+                });
+        return result;
+    }
 }

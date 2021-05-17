@@ -44,4 +44,11 @@ public interface ApiInterface {
 
     @POST("updateRiderPaymentStatusByDeliveryId.php")
     Observable<ModelResponse> updateRiderPaymentStatusByDeliveryId(@Body ModelDeliveryRequest deliveryRequest);
+
+    @POST("getAllRegisteredRiderInformation.php")
+    Observable<List<ModelRider>> getAllRegisteredRiderInfo();
+
+    @POST("updateRiderDutyStatus.php")
+    Observable<ModelResponse> updateRiderDutyStatus(@Body ModelRider rider);
+
 }
