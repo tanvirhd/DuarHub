@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1058984814265-oj2t71h6k9emuar10elr45i524u5d5n1.apps.googleusercontent.com",
+          "client_id": "1058984814265-tjeoaekqs7mi4tso20oflr0664v21gnf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.duarbd.duarclientapp",
-            "certificate_hash": "77152c0f328cb9c7bc3c533f24b68929bf4bfa18"
+            "certificate_hash": "b50a2a532699969e30200f5bb783d3a808d2f6a2"
           }
         },
         {

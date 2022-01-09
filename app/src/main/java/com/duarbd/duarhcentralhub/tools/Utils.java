@@ -9,19 +9,21 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.util.Log;
 import android.view.Window;
 
 import com.duarbd.duarhcentralhub.R;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 public class Utils {
-
+    private static final String TAG = "Utils";
     public static String getAddress(Context context, double LATITUDE, double LONGITUDE) {
         String locationName = "";
         try {
@@ -75,18 +77,28 @@ public class Utils {
     }
 
     public static String addMinute(String time,int pickupWithin){
+        Log.d(TAG, "addMinute: time="+time+ " pickup within="+pickupWithin);
+        DecimalFormat twodigits = new DecimalFormat("00");
         String ampm="";
         String[] separatedTime=time.split(":");
         int hour=Integer.valueOf(separatedTime[0]);
         int min=Integer.valueOf(separatedTime[1]);
 
         min=min+pickupWithin;
-        if(min>60){
+        if(min>=60){
             hour=hour+1;
             min=min-60;
         }
 
-        return hour+":"+min;
+        //todo 00:00 time exception not checked
+        if(hour<12){
+            return hour+":"+twodigits.format(min)+" am";
+        }else if(hour==12){
+            return hour+":"+twodigits.format(min)+" pm";
+        }else {
+            hour=hour-12;
+            return hour+":"+twodigits.format(min)+" pm";
+        }
     }
 
     public static Dialog setupLoadingDialog(Activity activity) {

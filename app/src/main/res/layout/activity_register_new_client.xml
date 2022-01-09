@@ -103,7 +103,7 @@
                 android:drawableStart="@drawable/ic_business_location"
                 android:drawablePadding="8dp"
                 android:gravity="center_vertical"
-                android:text="Business Address "
+                android:hint="Business Address "
                 android:textColor="@color/black4"
                 android:textSize="16dp"
                 android:background="@drawable/bg_cr4_liteblack"
@@ -113,6 +113,7 @@
 
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/openmap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,6 +146,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
+                android:visibility="gone"
                 android:id="@+id/etOTP"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
@@ -163,6 +165,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/outlinedTextField1" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/btnPhoneAuth"
                 android:layout_width="100dp"
                 android:layout_height="50dp"

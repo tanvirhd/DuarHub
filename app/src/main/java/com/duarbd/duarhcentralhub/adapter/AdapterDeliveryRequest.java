@@ -44,24 +44,31 @@ public class AdapterDeliveryRequest extends RecyclerView.Adapter<AdapterDelivery
         switch (deliveryRequest.getDeliveryStatus()){
             case 0:
                 holder.tvRDStatus.setText("Status: "+"Pending");
+                holder.tvRDStatus.setBackground(context.getResources().getDrawable(R.drawable.text_background_fill_red,null));
                 break;
             case 1:
                 holder.tvRDStatus.setText("Status: "+"Accepted");
+                holder.tvRDStatus.setBackground(context.getResources().getDrawable(R.drawable.text_background_fill_yellow,null));
                 break;
             case 2:
                 holder.tvRDStatus.setText("Status: "+"Rider Assigned");
+                holder.tvRDStatus.setBackground(context.getResources().getDrawable(R.drawable.text_background_fill_yellow,null));
                 break;
             case 3:
                 holder.tvRDStatus.setText("Status: "+"On the way to pickup");
+                holder.tvRDStatus.setBackground(context.getResources().getDrawable(R.drawable.text_background_fill_yellow,null));
                 break;
             case 4:
                 holder.tvRDStatus.setText("Status: "+"Received");
+                holder.tvRDStatus.setBackground(context.getResources().getDrawable(R.drawable.text_background_fill_yellow,null));
                 break;
             case 5:
                 holder.tvRDStatus.setText("Status: "+"On the way to delivery");
+                holder.tvRDStatus.setBackground(context.getResources().getDrawable(R.drawable.text_background_fill_yellow,null));
                 break;
             case 6:
                 holder.tvRDStatus.setText("Status: "+"Delivered");
+                holder.tvRDStatus.setBackground(context.getResources().getDrawable(R.drawable.text_background_fill_yellow,null));
                 break;
             case 7:
                 holder.tvRDStatus.setText("Canceled");

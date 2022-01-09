@@ -93,12 +93,15 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
         binding.btnCompleteRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(binding.etClientBusinessName.equals("")||binding.tvClientAddress.equals("")||selectedTypePosition==-1||
-                     !binding.btnPhoneAuth.getText().equals("Verified")||clientBusinessPlace==null){
+                if(binding.etClientBusinessName.equals("")||
+                        binding.tvClientAddress.equals("")||
+                        selectedTypePosition==-1/*||
+                        !binding.btnPhoneAuth.getText().equals("Verified") ||
+                        clientBusinessPlace==null*/){
                     Toast.makeText(ActivityRegisterNewClient.this, "Fill-up all Field", Toast.LENGTH_SHORT).show();
                 } else {
                     ModelClient newClient=new ModelClient(binding.clientPhoneNumber.getText().toString(), binding.clientPhoneNumber.getText().toString(),
-                            binding.etClientBusinessName.getText().toString(),clientBusinessPlace.getLatLng().latitude, clientBusinessPlace.getLatLng().longitude,
+                            binding.etClientBusinessName.getText().toString(),0.000000, 0.000000,
                             binding.tvClientAddress.getText().toString(), productTypeList.get(selectedTypePosition).getProductTypeName(),
                             binding.etClientBusinessName.getText().toString().substring(0,3).replaceAll("\\s+","")+binding.clientPhoneNumber.getText().toString(),
                             0); //todo add pickup charge field to XMl
@@ -112,6 +115,7 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
                                         binding.btnCompleteRegistration.setVisibility(View.GONE);
                                         Toast.makeText(ActivityRegisterNewClient.this, "Registration Complete", Toast.LENGTH_SHORT).show();
                                     }else {
+                                        Log.d(TAG, "onChanged: "+modelResponse.getResponse()+" error:"+modelResponse.getStatus());
                                         Toast.makeText(ActivityRegisterNewClient.this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -264,7 +268,7 @@ public class ActivityRegisterNewClient extends AppCompatActivity implements Adap
     @Override
     protected void onResume() {
         super.onResume();
-        if(clientBusinessPlace!=null){
+        if(clientBusinessPlace!=null) {
             binding.tvClientAddress.setText(clientBusinessPlace.getAddress());
         }
     }

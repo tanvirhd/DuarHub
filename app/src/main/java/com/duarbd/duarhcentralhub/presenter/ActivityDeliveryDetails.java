@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class ActivityDeliveryDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deliveryRequest.setDeliveryStatus(1);
+                Log.d(TAG, "onClick: "+deliveryRequest.getPickupCode());
                 updateDeliveryStatusByid(deliveryRequest);
             }
         });
@@ -47,6 +49,7 @@ public class ActivityDeliveryDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deliveryRequest.setDeliveryStatus(7);
+                Log.d(TAG, "onClick: "+deliveryRequest.getPickupCode());
                 updateDeliveryStatusByid(deliveryRequest);
             }
         });
@@ -54,8 +57,9 @@ public class ActivityDeliveryDetails extends AppCompatActivity {
         binding.btnAssignRider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: "+deliveryRequest.getDeliveryStatus());
                 startActivity(new Intent(ActivityDeliveryDetails.this,ActivityAssignRider.class)
-                    .putExtra(getResources().getString(R.string.intent_data),deliveryRequest.getDeliveryRequestId()));
+                    .putExtra(getResources().getString(R.string.intent_data),deliveryRequest));
             }
         });
     }
@@ -134,22 +138,26 @@ public class ActivityDeliveryDetails extends AppCompatActivity {
             case 2:
                 binding.tvRequestStatusText.setText("Rider Assigned."+"\n\n"+ridername);
                 binding.status1.setVisibility(View.GONE);
-                binding.status2.setVisibility(View.GONE);
+                binding.status2.setVisibility(View.VISIBLE);
+                binding.btnAssignRider.setText("Re-Assign Rider");
                 break;
             case 3:
                 binding.tvRequestStatusText.setText("Rider is on his way to pick-up "+ridername);
                 binding.status1.setVisibility(View.GONE);
-                binding.status2.setVisibility(View.GONE);
+                binding.status2.setVisibility(View.VISIBLE);
+                binding.btnAssignRider.setText("Re-Assign Rider");
                 break;
             case 4:
                 binding.tvRequestStatusText.setText("Received by "+deliveryRequest.getRiderName());
                 binding.status1.setVisibility(View.GONE);
-                binding.status2.setVisibility(View.GONE);
+                binding.status2.setVisibility(View.VISIBLE);
+                binding.btnAssignRider.setText("Re-Assign Rider");
                 break;
             case 5:
                 binding.tvRequestStatusText.setText("On the way to be delivered "+ridername);
                 binding.status1.setVisibility(View.GONE);
-                binding.status2.setVisibility(View.GONE);
+                binding.status2.setVisibility(View.VISIBLE);
+                binding.btnAssignRider.setText("Re-Assign Rider");
                 break;
             case 6:
                 binding.tvRequestStatusText.setText("Deliverd."+"\n\n"+ridername);

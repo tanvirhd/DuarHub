@@ -1,6 +1,7 @@
 package com.duarbd.duarhcentralhub.presenter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -9,11 +10,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +48,8 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "ActivityHome";
     private ActivityHomeBinding binding;
     private ViewModelHub viewModelHub;
+    public final int ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS_REQUEST_CODE = 2324;
+    private PowerManager powerManager;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -53,6 +60,7 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         binding=ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         init();
         initNavDrawer();
         storeFCMToken();
@@ -62,6 +70,7 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(binding.toolbar);
         viewModelHub=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelHub.class);
         adapterViewPager=new AdapterViewPager(ActivityHome.this);
+        powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
         binding.viewpager.setAdapter(adapterViewPager);
         TabLayoutMediator tabLayoutMediator=new TabLayoutMediator(
@@ -81,6 +90,7 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
         tabLayoutMediator.attach();
         wrapTabIndicatorToTitle(binding.tabLayout,50,50);
 
+        if(!isIgnoringBatteryOptimizationsGranted()) requestIgnoreBatteryOptimizationPermission();
     }
 
     void initNavDrawer(){
@@ -188,5 +198,37 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    void requestIgnoreBatteryOptimizationPermission() {
+        Log.d(TAG, "requestIgnoreBatteryOptimizationPermission: called");
+        Intent intent = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + getApplicationContext().getPackageName()));
+        }
+        startActivityForResult(intent, ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS_REQUEST_CODE){
+            switch (resultCode) {
+                case RESULT_OK:
+                    Toast.makeText(this, "Permission Granted!!", Toast.LENGTH_SHORT).show();
+                    break;
+                case RESULT_CANCELED:
+                    Toast.makeText(this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
+
+    private boolean isIgnoringBatteryOptimizationsGranted() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+            return true;
+        } else if (powerManager.isIgnoringBatteryOptimizations(getApplicationContext().getPackageName())) {
+            return true;
+        } else return false;
+    }
 
 }

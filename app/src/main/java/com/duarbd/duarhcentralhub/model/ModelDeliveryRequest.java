@@ -18,6 +18,7 @@ public class ModelDeliveryRequest implements Parcelable {
     private String clientID;
 
     @SerializedName("clientName")
+    @Expose
     private String clientName;
 
     @SerializedName("customerName")
@@ -88,6 +89,10 @@ public class ModelDeliveryRequest implements Parcelable {
     @Expose
     private String clientPaymentStatus;
 
+    @SerializedName("pickupCode")
+    @Expose
+    private String pickupCode;
+
     @SerializedName("response")
     @Expose
     private String response;
@@ -135,6 +140,7 @@ public class ModelDeliveryRequest implements Parcelable {
         this.riderName="";
         this.clientPaymentStatus="due";
     }
+
 
     public String getDeliveryRequestId() {
         return deliveryRequestId;
@@ -312,6 +318,14 @@ public class ModelDeliveryRequest implements Parcelable {
         this.clientPaymentStatus = clientPaymentStatus;
     }
 
+    public String getPickupCode() {
+        return pickupCode;
+    }
+
+    public void setPickupCode(String pickupCode) {
+        this.pickupCode = pickupCode;
+    }
+
     public String getResponse() {
         return response;
     }
@@ -328,11 +342,8 @@ public class ModelDeliveryRequest implements Parcelable {
         this.status = status;
     }
 
-    public static Creator<ModelDeliveryRequest> getCREATOR() {
-        return CREATOR;
-    }
+    //==============================================================================================
 
-    //=============================================================================================================
     protected ModelDeliveryRequest(Parcel in) {
         deliveryRequestId = in.readString();
         clientID = in.readString();
@@ -356,6 +367,7 @@ public class ModelDeliveryRequest implements Parcelable {
         riderid = in.readString();
         riderClearance = in.readString();
         clientPaymentStatus = in.readString();
+        pickupCode = in.readString();
         response = in.readString();
         status = in.readString();
     }
@@ -384,6 +396,7 @@ public class ModelDeliveryRequest implements Parcelable {
         dest.writeString(riderid);
         dest.writeString(riderClearance);
         dest.writeString(clientPaymentStatus);
+        dest.writeString(pickupCode);
         dest.writeString(response);
         dest.writeString(status);
     }

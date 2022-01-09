@@ -93,7 +93,7 @@ public class ActivityRegisterNewRider extends AppCompatActivity {
                 if(binding.etRiderName.getText().toString().equals("")||
                     binding.etRiderPhnNumber.getText().toString().equals("")||
                      binding.etRiderPhnNumber.getText().toString().length()!=11||
-                       binding.etOTP.getText().toString().equals("")||
+                       /*binding.etOTP.getText().toString().equals("")||*/
                         selectedRiderVehicleType.equals("")||selectedRiderVehicleType==null){
                     Toast.makeText(ActivityRegisterNewRider.this, "Fill all Fields", Toast.LENGTH_SHORT).show();
                 }else {

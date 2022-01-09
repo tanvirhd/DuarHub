@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class ActivityAssignRider extends AppCompatActivity implements AdapterAct
     private AdapterActiveRiders adapterActiveRiders;
     private Dialog dialogLoading;
 
-    private  String deliveryRequestId;
+    private  ModelDeliveryRequest deliveryRequest;
 
 
 
@@ -60,7 +61,7 @@ public class ActivityAssignRider extends AppCompatActivity implements AdapterAct
 
         viewModelHub=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelHub.class);
         dialogLoading= Utils.setupLoadingDialog(ActivityAssignRider.this);
-        deliveryRequestId=getIntent().getStringExtra(getResources().getString(R.string.intent_data));
+        deliveryRequest=getIntent().getParcelableExtra(getResources().getString(R.string.intent_data));
 
 
         activeRiderList=new ArrayList<>();
@@ -97,10 +98,12 @@ public class ActivityAssignRider extends AppCompatActivity implements AdapterAct
 
     @Override
     public void onAssignNewRideClicked(int position) {
+        Log.d(TAG, "onAssignNewRideClicked: "+deliveryRequest.getDeliveryStatus());
         dialogLoading.show();
-        ModelDeliveryRequest request=new ModelDeliveryRequest(deliveryRequestId,activeRiderList.get(position).getRiderName(),
-                activeRiderList.get(position).getRiderid());
-        viewModelHub.assignRiderByDeliveryRequestId(request).observe(ActivityAssignRider.this,
+        deliveryRequest.setRiderName(activeRiderList.get(position).getRiderName());
+        deliveryRequest.setRiderid( activeRiderList.get(position).getRiderid());
+        //Log.d(TAG, "onAssignNewRideClicked: "+deliveryRequest.getPickupCode());
+        viewModelHub.assignRiderByDeliveryRequestId(deliveryRequest).observe(ActivityAssignRider.this,
                 new Observer<ModelResponse>() {
                     @Override
                     public void onChanged(ModelResponse modelResponse) {

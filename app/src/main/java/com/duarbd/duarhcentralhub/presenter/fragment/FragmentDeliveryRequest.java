@@ -85,8 +85,7 @@ public class FragmentDeliveryRequest extends Fragment implements AdapterDelivery
                         if(modelDeliveryRequests!=null&&!modelDeliveryRequests.get(0).getResponse().equals("0")){
                             if(!modelDeliveryRequests.get(0).getStatus().equals("NothingFound")){
                                 deliveryRequestList.clear();
-                                for(ModelDeliveryRequest request:modelDeliveryRequests)
-                                    if(!request.getStatus().equals("4")) deliveryRequestList.add(request);
+                                deliveryRequestList.addAll(modelDeliveryRequests);
                                 adapterDeliveryRequest.notifyDataSetChanged();
                                 dialogLoading.dismiss();
                             }else {
@@ -110,11 +109,11 @@ public class FragmentDeliveryRequest extends Fragment implements AdapterDelivery
                         if(modelDeliveryRequests!=null&&!modelDeliveryRequests.get(0).getResponse().equals("0")){
                             deliveryRequestList.clear();
                             if(!modelDeliveryRequests.get(0).getStatus().equals("NothingFound")){
-                                for(ModelDeliveryRequest request:modelDeliveryRequests)
-                                    if(!request.getStatus().equals("4")) deliveryRequestList.add(request);
+                                deliveryRequestList.addAll(modelDeliveryRequests);
                                 adapterDeliveryRequest.notifyDataSetChanged();
                                 binding.swipeRefreshList.setRefreshing(false);
                             }else {
+                                deliveryRequestList.clear();adapterDeliveryRequest.notifyDataSetChanged();
                                 binding.swipeRefreshList.setRefreshing(false);
                                 Toast.makeText(fragmentActivity, "No delivery request found", Toast.LENGTH_SHORT).show();
                             }
